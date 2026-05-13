@@ -139,3 +139,128 @@ We identify seven sub-gaps. We do not claim the list is exhaustive; we claim it 
 **Sub-gap 7 · The Aesthetic-Judgment gap.** Robot success criteria are predominantly functional (the robot completed the task or not). Live performance success criteria are partially aesthetic — was the moment moving, did the comedy land, did the audience lean in. Even formal metrics (run time, sound level, cue precision) underdetermine aesthetic success. *Candidate direction:* the Director Intelligence Profile as aesthetic judge (Section 5.2), combined with structured audience response signals in previews; explicit acknowledgment that aesthetic judgment will remain partially human throughout the paradigm's lifetime.
 
 These seven sub-gaps are the proposed map of the Sim-to-Stage research territory. We invite extension, refinement, and challenge.
+
+---
+
+## 5. Architecture Primitives
+
+A Sim-to-Stage system, regardless of implementation, must instantiate the following seven primitives. We define each primitive at the paradigm level — the role it plays, the interface it presents to the rest of the system — without committing to implementation details, which are properly the subject of later technical reports.
+
+### 5.1 The Authoritative Truth Source (ATS)
+
+The ATS is a single, canonical, append-only registry of the production state: the script as currently authorized, the blocking as currently authorized, the cue list as currently authorized, the design choices as currently authorized. Every other component of the system reads from the ATS and proposes against it; only Confirmation Gates (Section 5.4) admit writes to it. The ATS is the formal codification of "the production as the director currently authorizes it."
+
+*Role in the homomorphism:* the ATS is the Sim-to-Stage analog of the policy parameter set in Sim-to-Real — the canonical object being trained, validated, and transferred.
+
+### 5.2 The Director Intelligence Profile (DIP)
+
+The DIP is the system's model of the director: their declared aesthetic rules, their stylistic patterns inferred from prior decisions, their preferences for ambiguity resolution, and their authority delegation policy (what they decide themselves vs. what specialists may decide). The DIP is the mechanism by which the informal authority of director intent is rendered partially formal — enough to drive specialist proposals and Sim evaluation, without flattening aesthetic judgment.
+
+*Role in the homomorphism:* the DIP is the Sim-to-Stage analog of the reward function in Sim-to-Real. Where robotics often gets a single mathematical reward function, Sim-to-Stage gets a partial, evolving, gated stand-in.
+
+### 5.3 Specialist Production Agents
+
+Specialist agents are domain-specific generative and orchestration components: a lighting agent that drafts lighting plots and cues, a sound agent for sound, a video agent for video, a scenic agent for scenic, a blocking agent for blocking, and so on. Each specialist agent reads the current ATS, proposes changes against it, and submits proposals to the Confirmation Gate for the relevant department. Specialists may be AI agents, human professionals using AI-augmented tools, or any combination.
+
+*Role in the homomorphism:* specialist agents are the Sim-to-Stage analog of the multi-agent or multi-skill policy structures emerging in robotics fleet learning. Live performance is irreducibly multi-department, so this multi-agent structure is structurally necessary, not stylistic.
+
+### 5.4 The Confirmation Gate
+
+A Confirmation Gate is the director-mediated decision point at which specialist proposals are evaluated and either accepted into the ATS, rejected, or returned for revision. Confirmation Gates may be high-touch (the director reviews each proposal individually) or low-touch (specialists operate within director-declared autonomy bands and only flag edge cases), but they are always present as the authorization mechanism. The Confirmation Gate is the formal site at which director authority enters the pipeline.
+
+*Role in the homomorphism:* the Confirmation Gate is the Sim-to-Stage analog of the deployment gate in safety-critical Sim-to-Real practice — the explicit moment at which "this artifact is authorized for the next stage."
+
+### 5.5 The Stage Simulation Environment
+
+The Stage Simulation Environment is the sim itself: a multi-modal model of the live stage at some fidelity — lighting state, sound state, video state, scenic state, blocking, performer timing. The Sim Environment runs the validated ATS as a simulated rehearsal, surfacing problems (cross-modal incoherence, dramatic dead spots, technical conflicts) before they appear in physical rehearsal.
+
+*Role in the homomorphism:* the Sim Environment is the Sim-to-Stage analog of the physics simulator in Sim-to-Real. It is the substrate of the paradigm; the rest of the system is defined relative to it.
+
+### 5.6 The Cue Compiler
+
+The Cue Compiler is the component that translates the Sim-validated ATS into one-shot executable artifacts for live execution: cue scripts callable by stage management, console programs deployable to lighting / sound / video consoles, briefing packages for cast and technical crew. The Cue Compiler is responsible for materializing the sim's validated state into formats that live execution can act on.
+
+*Role in the homomorphism:* the Cue Compiler is the Sim-to-Stage analog of the policy export step in Sim-to-Real — the moment at which the sim-internal representation is converted into a deployable artifact.
+
+### 5.7 The Provenance Ledger
+
+The Provenance Ledger is an append-only audit trail of every decision in the production: every specialist proposal, every Confirmation Gate outcome, every ATS revision, every Sim rehearsal verdict. The ledger enables accountability ("who decided this and why"), reproducibility ("what was the state of the ATS at this point"), and downstream learning (training the DIP on the director's actual revealed decisions over time).
+
+*Role in the homomorphism:* the Provenance Ledger is the Sim-to-Stage analog of the experiment log and model registry in modern robotics MLOps practice.
+
+---
+
+## 6. Toward a Sim-to-Stage Benchmark
+
+A paradigm is established not only by its definition but by the benchmark community against which progress is measured. We sketch the structure of a Sim-to-Stage benchmark here; the full proposal will land separately as `benchmark.md` in this repository.
+
+We propose that a Sim-to-Stage benchmark should evaluate, at minimum:
+
+- **Cross-modal coherence** — does the Sim-rehearsed production exhibit consistent lighting / sound / video / scenic / blocking coordination at each cue point?
+- **Transfer fidelity** — does the executed live performance match the Sim-rehearsed state on observable dimensions (cue timing, cross-modal coordination, executed-vs-planned divergence)?
+- **Director-intent retention** — does the executed production preserve the director's declared aesthetic and stylistic priorities as recorded in the DIP?
+- **Audit traceability** — for any property of the executed production, can the Provenance Ledger trace it back to a declared director decision?
+- **Production efficiency** — does the paradigm reduce the wall-clock effort to producible state, relative to the unaided baseline?
+
+A serious Sim-to-Stage benchmark will require a benchmark *corpus* of productions across genres, scales, and traditions. We invite participation in defining this corpus.
+
+---
+
+## 7. Related Work
+
+The Sim-to-Stage paradigm draws on, and is meant to extend, several adjacent literatures.
+
+- **Sim-to-Real in robotics** is the immediate ancestor; the homomorphism in Section 3.2 is the formal statement of the inheritance.
+- **World models** in machine learning provide simulation substrate techniques applicable to Sim-to-Stage rehearsal environments.
+- **Multi-agent systems** literature informs the specialist production agent layer.
+- **Theater production scholarship** — production journals, design process literature, the history of stage management — provides the ground truth against which any Sim-to-Stage system must be evaluated.
+- **Live production tooling** — QLab, ETC Eos, Disguise, Capture, WYSIWYG, depence² — represents the departmental-island state of the practice that Sim-to-Stage proposes to unify under a shared truth source.
+
+We will expand related-work coverage in subsequent revisions.
+
+---
+
+## 8. Discussion and Limitations
+
+We are explicit about what this position paper does **not** claim and where the paradigm's open problems remain.
+
+- **The seven sub-gaps are unsolved.** We have named them, not closed them. Each is a research direction, not a result.
+- **The seven architecture primitives are not unique.** Other decompositions of a Sim-to-Stage system are possible. We claim ours is *useful*, not *exclusive*.
+- **Aesthetic judgment will remain partially human.** Sub-gap 7 is, in our view, partially irreducible; we do not propose the paradigm fully formalizes theatrical taste, only that the DIP and the Confirmation Gate provide the right interfaces for human aesthetic judgment to enter the pipeline.
+- **The paradigm has not been validated at scale.** The reference implementation StageR is in development. We are honest that this paper is, at its publication date, ahead of empirical evidence. Subsequent papers in this repository will report on empirical progress as it accumulates.
+- **The paradigm may not cover all live production.** Some traditions — devised work, improvisation-heavy forms, audience-participatory performance — may fit awkwardly into the ATS / Confirmation Gate / Cue Compiler structure. We do not claim universal applicability.
+
+---
+
+## 9. Conclusion
+
+We have introduced the Sim-to-Stage paradigm: a structural homomorphism of Sim-to-Real adapted to the domain of live performance production. We have defined the Sim-to-Stage gap as the paradigm's central open problem and decomposed it into seven sub-gaps. We have proposed seven architecture primitives that any Sim-to-Stage system must instantiate. We have sketched the structure of a Sim-to-Stage benchmark.
+
+We are at the beginning of this research program, not the end. We invite extensions, refinements, challenges, and alternative formulations from external research groups, theater companies, and live-production industrial implementers. The paradigm belongs to its community; this paper is a starting coordinate.
+
+---
+
+## Citation
+
+If you reference the term "Sim-to-Stage" or this paradigm in academic or industrial work, please cite:
+
+```bibtex
+@misc{simtostage2026,
+  title  = {Sim-to-Stage: A Paradigm for Live Performance Production},
+  author = {{Sim-to-Stage Research}},
+  year   = {2026},
+  url    = {https://simtostage.com},
+  note   = {Position paper v0.1.
+            Canonical repository: https://github.com/sim-to-stage/sim-to-stage}
+}
+```
+
+A machine-readable `CITATION.cff` is provided in this repository.
+
+## License
+
+This work is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE). You may use, share, adapt, translate, and build upon this material — including for commercial purposes — provided you give appropriate credit. The paradigm belongs to its community; the license invites contribution.
+
+## Versioning
+
+This is Position Paper **v0.1**. We expect substantial revision in v0.2 and v0.3 as the paradigm matures, additional empirical evidence accumulates, and external contributors challenge or extend the formulation. We welcome issues and pull requests on the canonical repository.
