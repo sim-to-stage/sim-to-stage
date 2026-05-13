@@ -3,7 +3,7 @@
 > A paradigm for compiling director intent into rehearsable, executable,
 > audit-traceable live-stage artifacts under a single authoritative truth source.
 
-**Status:** Position paper v0.1 — in progress
+**Status:** Position paper v0.1 published 2026-05-14 — see [`paper.md`](paper.md)
 **Site:** [simtostage.com](https://simtostage.com)
 **Canonical home:** [github.com/sim-to-stage/sim-to-stage](https://github.com/sim-to-stage/sim-to-stage)
 
@@ -23,21 +23,22 @@ gate, transfer. The Sim-to-Stage paradigm formalizes that discipline.
 
 ## What is in this repository
 
-This repository is the canonical home of the Sim-to-Stage paradigm. It will host:
+This repository is the canonical home of the Sim-to-Stage paradigm. It hosts:
 
-- The Position Paper (`paper.md`) — full definition, Sim-to-Real ↔ Sim-to-Stage
-  homomorphism, Sim-to-Stage gap formalization, and architecture primitives.
-- The Sim-to-Stage Benchmark proposal — task definitions and evaluation metrics.
-- Citation, license, and contribution guidelines.
-
-The Position Paper v0.1 will land here in the coming weeks. This README is the
-placeholder frame.
+- ✅ The **Position Paper** ([`paper.md`](paper.md)) — full definition,
+  Sim-to-Real ↔ Sim-to-Stage homomorphism, Sim-to-Stage gap decomposition
+  (seven sub-gaps), and seven architecture primitives. Published 2026-05-14
+  as v0.1.
+- ⏳ The Sim-to-Stage Benchmark proposal (`benchmark.md`) — task definitions
+  and evaluation metrics. Target Q4 2026.
+- ✅ Citation ([`CITATION.cff`](CITATION.cff)), license ([`LICENSE`](LICENSE)),
+  and contribution guidelines.
 
 ## Roadmap
 
 - [x] Domain registered: `simtostage.com`
 - [x] Canonical GitHub home: `sim-to-stage/sim-to-stage`
-- [ ] Position Paper v0.1 (target: Q3 2026)
+- [x] **Position Paper v0.1 published 2026-05-14** — see [`paper.md`](paper.md)
 - [ ] Sim-to-Stage Benchmark proposal v0.1 (target: Q4 2026)
 - [ ] First external co-author / reviewer engagement
 - [ ] Reference implementation public preview
@@ -53,7 +54,7 @@ industrial work, please cite:
   author = {{Sim-to-Stage Research}},
   year   = {2026},
   url    = {https://simtostage.com},
-  note   = {Position paper in progress.
+  note   = {Position paper v0.1, published 2026-05-14.
             Canonical repository: https://github.com/sim-to-stage/sim-to-stage}
 }
 ```
@@ -98,12 +99,11 @@ Sim-to-Stage 范式正式化了这套纪律。
 
 本仓库是 Sim-to-Stage 范式的官方权威坐标。即将容纳：
 
-- **Position Paper**（`paper.md`）—— 范式完整定义、Sim-to-Real ↔ Sim-to-Stage 同构对照、
-  Sim-to-Stage gap 形式化、架构 primitives。
-- **Sim-to-Stage Benchmark 提案** —— 评估任务定义与指标。
-- 引用规范、协议、贡献指南。
-
-Position Paper v0.1 将在未来数周内落地。本 README 是占位框架。
+- ✅ **Position Paper**（[`paper.md`](paper.md)）—— 范式完整定义、
+  Sim-to-Real ↔ Sim-to-Stage 同构对照、Sim-to-Stage gap 分解（7 个子 gap）、
+  7 个架构 primitives。2026-05-14 已发布 v0.1。
+- ⏳ Sim-to-Stage Benchmark 提案（`benchmark.md`）—— 评估任务定义与指标。目标 Q4 2026。
+- ✅ 引用规范、协议、贡献指南。
 
 ### 引用本工作
 
