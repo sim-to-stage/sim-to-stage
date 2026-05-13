@@ -70,3 +70,72 @@ Three preconditions for Sim-to-Stage have arrived approximately together in 2024
 3. **Sim-to-Real** as a paradigm has matured to the point that its vocabulary and architectural lessons (gap diagnosis, mitigation families, benchmark structure) can be ported to adjacent transfer domains.
 
 The Sim-to-Stage paradigm therefore arrives at a specific historical moment, and we believe the moment is genuinely open: no canonical paradigm has yet been published for this domain.
+
+---
+
+## 3. The Sim-to-Stage Paradigm
+
+### 3.1 Definition
+
+**Sim-to-Stage** is a paradigm for producing live performances in which:
+
+1. The production is represented as an **authoritative, director-gated, multi-modal artifact** (the Authoritative Truth Source — Section 5.1) maintained as a single source of truth across all departments.
+2. The production is **rehearsed end-to-end in a simulation environment** that models, to varying fidelity, lighting state, sound state, video state, scenic state, blocking, and performance timing.
+3. Specialist work is contributed by **department-level agents** (human or AI) whose proposals are reconciled against the truth source through **director-mediated confirmation gates**.
+4. The validated simulation is **compiled into one-shot executable artifacts** (cue scripts, packages, briefings) that human performers and technical crew deploy on the live stage.
+5. Every decision, every gate, every revision is recorded in a **provenance ledger** that maintains audit traceability from director intent to live execution.
+
+A Sim-to-Stage system is one that instantiates all five of these properties. The first reference implementation is StageR (https://simtostage.com), but the paradigm is intended to be larger than any single implementation, and we invite external groups to instantiate it independently.
+
+### 3.2 Homomorphism with Sim-to-Real
+
+Sim-to-Stage is not merely analogous to Sim-to-Real in metaphor; the two paradigms exhibit a structural **homomorphism** — a one-to-one correspondence of roles between the two transfer pipelines. Table 1 documents the correspondence.
+
+**Table 1: The Sim-to-Real ↔ Sim-to-Stage Homomorphism**
+
+| Aspect | Sim-to-Real (Robotics) | Sim-to-Stage (Live Performance) |
+|---|---|---|
+| Target domain | Physical world | Live stage / live audience |
+| Simulator | Physics engine (Isaac Sim, MuJoCo) | Stage simulation environment |
+| Object of transfer | Robot policy / control program | Cue script + production package |
+| Source of truth | Reward function | Director intent (codified, gated) |
+| Validation | Simulated rollout | Simulated rehearsal |
+| Transfer challenge | Sim-to-real gap | **Sim-to-stage gap (this paper)** |
+| Mitigation: randomization | Domain randomization | Variability rehearsal |
+| Mitigation: identification | System identification | Performer / venue identification |
+| Mitigation: residual | Residual policy learning | Dress-rehearsal residual adjustment |
+| Executor | Robot embodiment | Human performers + technical crew |
+| Re-run semantics | Possible (deploy, observe, redeploy) | One-shot per show (previews are imperfect dress-rehearsals) |
+| Success criterion | Task-completion metric | Director judgment + audience response (partially aesthetic) |
+| Multi-agent structure | Single robot or fleet | Irreducibly multi-department (lighting, sound, video, scenic, blocking, script) plus cast |
+| Governance | Safety review, deployment gate | Director-gated Confirmation Gates, technical and dress rehearsal sign-offs |
+
+We claim this homomorphism is not a stylistic flourish but a genuine engineering correspondence. Each row of Table 1 maps a Sim-to-Real role to a Sim-to-Stage role that occupies the same structural position in the transfer pipeline. We argue the homomorphism licenses the import of Sim-to-Real's accumulated engineering wisdom — randomization-style mitigation, identification-style mitigation, residual-style mitigation, deployment-gate governance — into Sim-to-Stage practice. The remaining sections develop the specifics.
+
+---
+
+## 4. The Sim-to-Stage Gap
+
+### 4.1 Definition
+
+We define the **Sim-to-Stage gap** as the family of discrepancies between a simulated rehearsal and the live performance that cause a Sim-validated production package to fail on the live stage. Like the Sim-to-Real gap in robotics, the Sim-to-Stage gap is not a single phenomenon but a structural collection of distinct sub-gaps, each amenable to its own analysis and mitigation. Closing the Sim-to-Stage gap is the central open research program of the paradigm.
+
+### 4.2 Seven Identified Sub-Gaps
+
+We identify seven sub-gaps. We do not claim the list is exhaustive; we claim it is *useful*: each sub-gap is independently studyable, and progress on any one is progress on the paradigm. Each sub-gap is named, defined, and connected to a candidate research direction.
+
+**Sub-gap 1 · The Timing-Variability gap.** Simulated rehearsal runs against a synthetic clock; live performance runs against human performance timing, which varies with audience response, performer state, and unrepeatable contingency. A cue script that fires precisely on a synthetic clock will fail when human performance is faster, slower, or restructured by ad-lib. *Candidate direction:* robust cue compilation that admits a tolerance window per cue, with sim-time domain randomization across performance-timing distributions.
+
+**Sub-gap 2 · The Director-Authority gap.** In Sim-to-Real, the reward function is the authority — a formal mathematical object. In Sim-to-Stage, the director's intent is the authority, but intent is informal: aesthetic, stylistic, intuitive, evolving through rehearsal. How does a system formalize an informal authority sufficiently that the rest of the pipeline can act on it, without flattening the aesthetic content? *Candidate direction:* the Director Intelligence Profile (Section 5.2) — a model of director preference that combines explicit declared rules, learned stylistic patterns, and decision-by-decision confirmation.
+
+**Sub-gap 3 · The Multi-Modal Coherence gap.** A live performance is a joint artifact across lighting, sound, video, scenic, blocking, script, and performer interpretation. Each modality has its own conventions, file formats, and specialist tools. Simulating one modality well is tractable; simulating all coherently is harder, and preserving coherence under transfer is harder still. *Candidate direction:* specialist production agents (Section 5.3) coordinating against a shared Authoritative Truth Source (Section 5.1), with cross-modal coherence checks at each Confirmation Gate.
+
+**Sub-gap 4 · The Human-Execution gap.** Robots execute the deployed policy autonomously. In Sim-to-Stage, the deployed artifact is executed by humans — actors interpret blocking, stage managers call cues, technicians operate consoles. Each human introduces interpretation, slippage, and modification. How does a sim-validated artifact survive contact with human execution? *Candidate direction:* compilation targets that explicitly model human execution affordances (cue scripts written for human operators; rehearsable, not just executable), and previews / dress rehearsals as transfer-validation checkpoints.
+
+**Sub-gap 5 · The One-Shot Deployment gap.** A robot policy can fail in deployment, be observed, and be redeployed after a fix. A live performance is one-shot per show: there is no retry. Sim-validation must be sufficient for one-shot deployment, a regime closer to safety-critical Sim-to-Real (surgical robotics, aerospace) than to typical robotics. *Candidate direction:* layered defense — sim eval, then specialist eval, then technical rehearsal eval, then dress-rehearsal eval, then preview eval — with each layer admitting only what the previous layer validated.
+
+**Sub-gap 6 · The Long-Horizon Narrative gap.** A robot policy may have a horizon of seconds to minutes; a live performance has a horizon of 90 to 180 minutes of continuous interconnected causal narrative (foreshadowing, character arcs, dramatic structure, payoff). Local Sim-validation of each scene does not imply global validation of long-horizon coherence. *Candidate direction:* narrative-aware Project Intelligence (a long-context understanding component) coupled with explicit dramaturgical evaluation criteria during sim rehearsal.
+
+**Sub-gap 7 · The Aesthetic-Judgment gap.** Robot success criteria are predominantly functional (the robot completed the task or not). Live performance success criteria are partially aesthetic — was the moment moving, did the comedy land, did the audience lean in. Even formal metrics (run time, sound level, cue precision) underdetermine aesthetic success. *Candidate direction:* the Director Intelligence Profile as aesthetic judge (Section 5.2), combined with structured audience response signals in previews; explicit acknowledgment that aesthetic judgment will remain partially human throughout the paradigm's lifetime.
+
+These seven sub-gaps are the proposed map of the Sim-to-Stage research territory. We invite extension, refinement, and challenge.
