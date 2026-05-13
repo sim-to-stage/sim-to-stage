@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: >-
+  If you reference the term "Sim-to-Stage" or this paradigm in academic
+  or industrial work, please cite it as below.
+title: "Sim-to-Stage: A Paradigm for Live Performance Production"
+type: misc
+authors:
+  - name: "Sim-to-Stage Research"
+    affiliation: "Beijing Yizhi Culture Media Co., Ltd."
+year: 2026
+url: "https://simtostage.com"
+repository-code: "https://github.com/sim-to-stage/sim-to-stage"
+abstract: >-
+  Sim-to-Stage is to live performance production what Sim-to-Real is to
+  robotics: a paradigm for training, validating, and producing complex
+  multi-modal artifacts in a simulation environment, then transferring
+  them to a real-world target — in this case, the live stage. The
+  paradigm centers on a director-gated single source of truth, a
+  multi-agent specialist production layer, and confirmation-gated
+  transfer from simulated rehearsal to executable stage artifacts.
+keywords:
+  - sim-to-stage
+  - sim-to-real
+  - paradigm
+  - live-performance
+  - multi-agent
+  - ai-production
+  - simulation-environment
+  - director-gated
+license: CC-BY-4.0
