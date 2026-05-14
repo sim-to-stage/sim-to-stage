@@ -3,222 +3,1080 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#fbfaf6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e0e" media="(prefers-color-scheme: dark)">
-<title>Sim-to-Stage — A director-gated simulation paradigm for live performance</title>
-<meta name="description" content="Sim-to-Stage is to live performance what Sim-to-Real is to robotics: simulate, validate, gate, and transfer. A paradigm proposal and position paper.">
+<title>Sim-to-Stage: A Paradigm for Live Performance Production — Position Paper v0.1</title>
+<meta name="description" content="Position Paper v0.1. Sim-to-Stage is to live performance production what Sim-to-Real is to robotics: a paradigm for simulating, validating, gating, and transferring multi-modal artifacts to the live stage.">
 <link rel="canonical" href="https://simtostage.com/">
-<meta property="og:title" content="Sim-to-Stage">
-<meta property="og:description" content="A director-gated simulation paradigm for bringing rehearsed stage worlds into live performance production.">
+<meta property="og:title" content="Sim-to-Stage — Position Paper v0.1">
+<meta property="og:description" content="A paradigm for live performance production. Structural homomorphism of Sim-to-Real adapted to the live stage.">
 <meta property="og:url" content="https://simtostage.com/">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta name="twitter:card" content="summary">
+<meta name="citation_title" content="Sim-to-Stage: A Paradigm for Live Performance Production">
+<meta name="citation_author" content="Chen, Tiantian">
+<meta name="citation_publication_date" content="2026-05-14">
+<meta name="citation_online_date" content="2026-05-14">
+<meta name="citation_pdf_url" content="https://simtostage.com/paper.pdf">
+<meta name="citation_doi" content="10.5281/zenodo.20175082">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F3AD;</text></svg>">
 <style>
   :root {
-    --bg: #fafaf7;
+    --bg: #fbfaf6;
+    --bg-elevated: #ffffff;
+    --bg-subtle: #f3efe6;
+    --bg-code: #1a1a1a;
+    --bg-inline-code: #efeadd;
     --fg: #1a1a1a;
-    --fg-muted: #555555;
-    --fg-faint: #888888;
-    --accent: #1a4d7d;
-    --rule: #d8d4cd;
+    --fg-muted: #4a4a4a;
+    --fg-soft: #6e6e6e;
+    --fg-faint: #8c8c8c;
+    --accent: #0b3d91;
+    --accent-soft: #1a4d7d;
+    --rule: #dad5c8;
+    --rule-strong: #b8b2a3;
+    --highlight: #fff3cc;
+    --highlight-rule: #e8c84d;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #0e0e0e;
+      --bg-elevated: #181818;
+      --bg-subtle: #1c1c1c;
+      --bg-code: #050505;
+      --bg-inline-code: #262626;
       --fg: #ececec;
-      --fg-muted: #b0b0b0;
+      --fg-muted: #c4c4c4;
+      --fg-soft: #9a9a9a;
       --fg-faint: #7a7a7a;
       --accent: #7fb1da;
+      --accent-soft: #9fc4e3;
       --rule: #2a2a2a;
+      --rule-strong: #404040;
+      --highlight: #3a2e08;
+      --highlight-rule: #6b5418;
     }
   }
+
   * { box-sizing: border-box; }
-  html, body {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 24px;
+  }
+  body {
     margin: 0;
-    padding: 0;
     background: var(--bg);
     color: var(--fg);
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: "Iowan Old Style", "Charter", "Source Serif Pro", "Cambria", Georgia, "Times New Roman", serif;
+    font-size: 18px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
-  .container {
-    max-width: 760px;
+  ::selection {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* === Top utility bar === */
+  .topbar {
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 72px 28px 96px;
-  }
-  header {
-    padding-bottom: 48px;
-    border-bottom: 1px solid var(--rule);
-  }
-  .eyebrow {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 13px;
+    padding: 24px 32px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
+    font-size: 12px;
     color: var(--fg-faint);
     letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-bottom: 28px;
   }
-  h1 {
-    font-size: 56px;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    margin: 0 0 18px;
-    line-height: 1.05;
+  .topbar a {
+    color: var(--fg-soft);
+    text-decoration: none;
+    transition: color 120ms ease;
   }
-  .subtitle {
-    font-size: 22px;
-    line-height: 1.45;
-    color: var(--fg-muted);
-    margin: 0 0 32px;
-    max-width: 620px;
-  }
-  .one-liner {
-    font-size: 18px;
-    line-height: 1.55;
+  .topbar a:hover {
     color: var(--fg);
-    margin: 0;
-    max-width: 620px;
-    font-style: italic;
   }
-  section.block {
-    padding: 44px 0 20px;
+  .topbar .home::before {
+    content: "← ";
+  }
+
+  /* === Hero === */
+  .hero {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px 32px 56px;
+  }
+  .hero .eyebrow {
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    margin: 0 0 28px;
+  }
+  .hero h1 {
+    font-family: "Iowan Old Style", "Charter", Georgia, serif;
+    font-size: 68px;
+    font-weight: 400;
+    letter-spacing: -0.028em;
+    line-height: 1.0;
+    margin: 0 0 18px;
+    color: var(--fg);
+  }
+  .hero .subtitle {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--fg-soft);
+    margin: 0 0 40px;
+    letter-spacing: -0.012em;
+    max-width: 680px;
+  }
+  .hero .lead {
+    font-size: 19px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--fg);
+    margin: 0 0 44px;
+    max-width: 700px;
+    padding-left: 20px;
+    border-left: 2px solid var(--accent);
+  }
+  .hero .meta {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px 28px;
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
+    font-size: 13px;
+    color: var(--fg-soft);
+    margin: 0;
+    max-width: 720px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+  .hero .meta dt {
+    color: var(--fg-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 11px;
+    padding-top: 2px;
+  }
+  .hero .meta dd {
+    margin: 0;
+  }
+  .hero .meta a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .hero .meta a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* === Layout === */
+  .paper {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px 96px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 64px;
+  }
+
+  /* === TOC === */
+  .toc {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, Helvetica, sans-serif;
+    font-size: 13px;
+    padding-top: 32px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+  }
+  .toc-title {
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    margin: 0 0 18px;
+    padding-bottom: 12px;
     border-bottom: 1px solid var(--rule);
   }
-  section.block h2 {
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .toc > ol > li {
+    margin: 0;
+  }
+  .toc a {
+    color: var(--fg-soft);
+    text-decoration: none;
+    display: block;
+    padding: 7px 0 7px 14px;
+    line-height: 1.4;
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  }
+  .toc a:hover {
+    color: var(--fg);
+    border-left-color: var(--accent);
+  }
+  .toc .toc-num {
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
+    font-size: 11px;
+    color: var(--fg-faint);
+    margin-right: 8px;
+    letter-spacing: 0.04em;
+  }
+  .toc ol ol {
+    padding-left: 14px;
+    font-size: 12px;
+  }
+  .toc ol ol a {
+    padding: 4px 0 4px 14px;
+    color: var(--fg-faint);
+  }
+
+  /* === Content === */
+  .content {
+    max-width: 720px;
+    padding-top: 32px;
+    min-width: 0;
+  }
+  .content > section:first-child {
+    margin-top: 0;
+  }
+  .content section {
+    margin-top: 64px;
+    scroll-margin-top: 24px;
+  }
+  .content h2 {
+    font-family: "Iowan Old Style", "Charter", Georgia, serif;
+    font-size: 38px;
+    font-weight: 400;
+    letter-spacing: -0.018em;
+    line-height: 1.12;
+    margin: 0 0 28px;
+    color: var(--fg);
+  }
+  .content h2 .section-num {
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
     font-size: 13px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--fg-faint);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin: 0 0 14px;
+    display: block;
+    margin-bottom: 10px;
   }
-  section.block h3 {
-    font-size: 24px;
-    font-weight: 400;
-    margin: 0 0 14px;
+  .content h3 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
     letter-spacing: -0.01em;
-    line-height: 1.3;
+    line-height: 1.32;
+    margin: 44px 0 18px;
+    color: var(--fg);
+    scroll-margin-top: 24px;
   }
-  section.block p {
-    font-size: 17px;
-    line-height: 1.65;
-    color: var(--fg-muted);
-    margin: 0 0 12px;
+  .content h3 .subsection-num {
+    color: var(--fg-faint);
+    font-weight: 500;
+    margin-right: 12px;
+    font-variant-numeric: tabular-nums;
   }
-  a {
+  .content p {
+    font-size: 18px;
+    line-height: 1.72;
+    margin: 0 0 20px;
+    color: var(--fg);
+  }
+  .content p:last-child {
+    margin-bottom: 0;
+  }
+  .content strong {
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .content em {
+    font-style: italic;
+  }
+  .content a {
     color: var(--accent);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
+    transition: text-decoration-thickness 120ms ease;
   }
-  a:hover {
+  .content a:hover {
     text-decoration-thickness: 2px;
   }
-  ul.links {
+  .content code {
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
+    font-size: 0.88em;
+    background: var(--bg-inline-code);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--fg);
+  }
+  .content ul,
+  .content ol {
+    font-size: 18px;
+    line-height: 1.72;
+    padding-left: 28px;
+    margin: 0 0 20px;
+  }
+  .content ul li,
+  .content ol li {
+    margin: 6px 0;
+  }
+  .content li::marker {
+    color: var(--fg-faint);
+  }
+  .content ol {
+    counter-reset: ol-counter;
     list-style: none;
-    padding: 0;
-    margin: 24px 0 0;
+    padding-left: 0;
   }
-  ul.links li {
-    margin: 0 0 14px;
-    font-size: 16px;
-    line-height: 1.55;
+  .content ol > li {
+    counter-increment: ol-counter;
+    padding-left: 36px;
+    position: relative;
   }
-  ul.links li::before {
-    content: "→  ";
-    color: var(--fg-faint);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  }
-  .guard {
-    padding: 36px 0 0;
-    color: var(--fg-faint);
+  .content ol > li::before {
+    content: counter(ol-counter) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: ui-monospace, SFMono-Regular, monospace;
     font-size: 14px;
-    font-style: italic;
-    line-height: 1.7;
-    max-width: 620px;
-  }
-  .zh {
-    margin-top: 40px;
-    padding-top: 32px;
-    border-top: 1px solid var(--rule);
-    color: var(--fg-muted);
-    font-size: 17px;
-    line-height: 1.7;
-    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Georgia, serif;
-  }
-  footer {
-    margin-top: 56px;
-    padding-top: 32px;
-    border-top: 1px solid var(--rule);
+    font-weight: 500;
     color: var(--fg-faint);
-    font-size: 13px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    line-height: 1.8;
+    width: 28px;
+    text-align: right;
+    padding-right: 8px;
   }
-  footer a {
+
+  /* === Abstract === */
+  .abstract {
+    background: var(--bg-subtle);
+    border-left: 3px solid var(--accent);
+    padding: 32px 36px;
+    margin: 16px 0 8px;
+    border-radius: 0 6px 6px 0;
+  }
+  .abstract-label {
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    margin: 0 0 18px;
+  }
+  .abstract p {
+    margin: 0;
+    font-size: 17.5px;
+    line-height: 1.7;
+    color: var(--fg);
+  }
+
+  /* === Table === */
+  .table-wrap {
+    margin: 36px 0 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .table-caption {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--fg-soft);
+    margin: 0 0 14px;
+  }
+  .table-caption .label {
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-right: 12px;
+    font-weight: 600;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    line-height: 1.5;
+    border-top: 1.5px solid var(--rule-strong);
+    border-bottom: 1.5px solid var(--rule-strong);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 13px 16px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+  }
+  th {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    border-bottom: 1.5px solid var(--rule-strong);
+    background: transparent;
+    padding-bottom: 12px;
+  }
+  td {
+    color: var(--fg);
+  }
+  td:first-child {
+    font-weight: 600;
+    color: var(--fg-muted);
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
+  tr.highlight td {
+    background: var(--highlight);
+  }
+  tr.highlight td strong {
+    color: var(--fg);
+    font-weight: 700;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* === Sub-gap card === */
+  .subgap {
+    margin: 28px 0;
+    padding: 22px 26px;
+    border-left: 3px solid var(--rule-strong);
+    background: var(--bg-subtle);
+    border-radius: 0 6px 6px 0;
+    transition: border-color 200ms ease;
+  }
+  .subgap:hover {
+    border-left-color: var(--accent);
+  }
+  .subgap-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin: 0 0 14px;
+  }
+  .subgap-num {
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--bg);
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  .subgap-name {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--fg);
+  }
+  .subgap p {
+    margin: 0 0 12px;
+    font-size: 17px;
+    line-height: 1.68;
+  }
+  .subgap p:last-child {
+    margin-bottom: 0;
+  }
+  .subgap .direction {
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--rule);
+    font-size: 16px;
     color: var(--fg-muted);
   }
-  @media (max-width: 600px) {
-    .container { padding: 44px 22px 64px; }
-    h1 { font-size: 40px; }
-    .subtitle { font-size: 18px; }
-    .one-liner { font-size: 16px; }
-    section.block h3 { font-size: 20px; }
+  .subgap .direction em {
+    color: var(--fg-soft);
+    font-weight: 500;
+    font-style: italic;
+    margin-right: 4px;
+  }
+
+  /* === Primitive === */
+  .primitive {
+    margin: 40px 0;
+  }
+  .primitive-role {
+    font-size: 16px;
+    font-style: italic;
+    color: var(--fg-soft);
+    border-left: 2px solid var(--rule);
+    padding: 10px 0 10px 18px;
+    margin: 18px 0 0;
+    background: linear-gradient(to right, var(--bg-subtle), transparent 60%);
+    border-radius: 0 4px 4px 0;
+  }
+  .primitive-role strong {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--fg-muted);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 8px;
+  }
+
+  /* === Code block === */
+  pre {
+    background: var(--bg-code);
+    color: #e8e8e8;
+    padding: 22px 26px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 24px 0;
+    font-family: ui-monospace, SFMono-Regular, "Menlo", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    -webkit-overflow-scrolling: touch;
+  }
+  pre code {
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: inherit;
+    color: inherit;
+    border-radius: 0;
+  }
+  pre .k { color: #ffb86c; }
+  pre .s { color: #a3e6a3; }
+  pre .c { color: #888; }
+
+  /* === Inline structures === */
+  .contributions {
+    margin: 24px 0;
+    padding-left: 0;
+  }
+
+  /* === Footer === */
+  .paper-footer {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px 32px;
+    border-top: 1px solid var(--rule);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+    font-size: 13px;
+    color: var(--fg-faint);
+    line-height: 1.85;
+    text-align: center;
+  }
+  .paper-footer a {
+    color: var(--fg-soft);
+    text-decoration: none;
+  }
+  .paper-footer a:hover {
+    color: var(--fg);
+    text-decoration: underline;
+  }
+  .paper-footer .divider {
+    margin: 0 8px;
+    color: var(--rule-strong);
+  }
+
+  /* === Mobile === */
+  @media (max-width: 960px) {
+    .topbar { padding: 20px 22px 0; }
+    .hero { padding: 40px 22px 40px; }
+    .hero h1 { font-size: 44px; }
+    .hero .subtitle { font-size: 19px; }
+    .hero .lead { font-size: 17px; padding-left: 16px; }
+    .hero .meta { font-size: 12px; gap: 6px 18px; }
+
+    .paper {
+      grid-template-columns: 1fr;
+      padding: 0 22px 64px;
+      gap: 0;
+    }
+    .toc {
+      position: static;
+      max-height: none;
+      overflow: visible;
+      padding: 28px 0 8px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 24px;
+    }
+    .toc ol ol { display: none; }
+
+    .content { padding-top: 24px; }
+    .content section { margin-top: 48px; }
+    .content h2 { font-size: 28px; }
+    .content h3 { font-size: 19px; margin-top: 36px; }
+    .content p,
+    .content ul,
+    .content ol { font-size: 17px; }
+    .content ol > li { padding-left: 32px; }
+
+    .abstract { padding: 24px 22px; }
+    .abstract p { font-size: 16.5px; }
+
+    .subgap { padding: 20px 22px; }
+    .subgap p { font-size: 16.5px; }
+
+    table { font-size: 13.5px; }
+    th, td { padding: 11px 12px; }
+    td:first-child { font-size: 12.5px; white-space: normal; }
+  }
+
+  /* === Print === */
+  @media print {
+    body { background: #fff; color: #000; font-size: 11pt; }
+    .topbar, .toc, .paper-footer { display: none; }
+    .hero { padding: 0 0 24pt; max-width: none; }
+    .hero h1 { font-size: 28pt; }
+    .hero .subtitle { font-size: 16pt; }
+    .hero .lead { font-size: 12pt; }
+    .paper {
+      grid-template-columns: 1fr;
+      padding: 0;
+      max-width: none;
+    }
+    .content { max-width: none; padding-top: 0; }
+    .content h2 { font-size: 18pt; }
+    .content h3 { font-size: 14pt; }
+    .content section { margin-top: 24pt; page-break-inside: avoid; }
+    .subgap, .primitive { page-break-inside: avoid; }
+    pre { background: #f5f5f5; color: #000; border: 1px solid #ccc; font-size: 9pt; }
+    a { color: #000; text-decoration: none; }
   }
 </style>
 </head>
 <body>
-<div class="container">
 
-<header>
-  <div class="eyebrow">Position Paper v0.1 &middot; 2026-05-14</div>
+<nav class="topbar" aria-label="Site navigation">
+  <span>Sim-to-Stage</span>
+  <span>v0.1 &middot; 2026-05-14</span>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Position Paper &middot; v0.1</div>
   <h1>Sim-to-Stage</h1>
-  <p class="subtitle">A director-gated simulation paradigm for bringing rehearsed stage worlds into live performance production.</p>
-  <p class="one-liner">Sim-to-Stage is to live performance what Sim-to-Real is to robotics: simulate, validate, gate, and transfer.</p>
+  <p class="subtitle">A Paradigm for Live Performance Production</p>
+  <p class="lead">Sim-to-Stage is to live performance production what Sim-to-Real is to robotics: a discipline for training, validating, and transferring complex multi-modal artifacts from a simulation environment to a real-world target.</p>
+  <dl class="meta">
+    <dt>Author</dt><dd>Tiantian Chen</dd>
+    <dt>Published</dt><dd>2026-05-14</dd>
+    <dt>DOI</dt><dd><a href="https://doi.org/10.5281/zenodo.20175082">10.5281/zenodo.20175082</a></dd>
+    <dt>License</dt><dd><a href="https://github.com/sim-to-stage/sim-to-stage/blob/main/LICENSE">CC BY 4.0</a></dd>
+    <dt>Repository</dt><dd><a href="https://github.com/sim-to-stage/sim-to-stage">github.com/sim-to-stage/sim-to-stage</a></dd>
+    <dt>Source</dt><dd><a href="https://github.com/sim-to-stage/sim-to-stage/blob/main/paper.md">paper.md</a></dd>
+  </dl>
 </header>
 
-<section class="block">
-  <h2>&sect; 1 &middot; The Paradigm</h2>
-  <h3>A single director-gated truth source. A multi-modal rehearsal environment. A compiler to the live stage.</h3>
-  <p>Sim-to-Stage formalizes the discipline of producing a live performance the way modern robotics produces a deployed policy. The production is represented as an authoritative, director-gated artifact across all departments. It is rehearsed end-to-end in a simulation environment. Specialist contributions &mdash; lighting, sound, video, scenic, blocking &mdash; are reconciled through director-mediated confirmation gates. The validated rehearsal is compiled into one-shot executable artifacts for the live stage.</p>
+<div class="paper">
+
+<nav class="toc" aria-label="Table of contents">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#abstract"><span class="toc-num">·</span>Abstract</a></li>
+    <li><a href="#introduction"><span class="toc-num">1</span>Introduction</a></li>
+    <li>
+      <a href="#background"><span class="toc-num">2</span>Background</a>
+      <ol>
+        <li><a href="#sim-to-real">2.1 Sim-to-Real</a></li>
+        <li><a href="#live-production-today">2.2 Live Production Today</a></li>
+        <li><a href="#why-now">2.3 Why Now</a></li>
+      </ol>
+    </li>
+    <li>
+      <a href="#paradigm"><span class="toc-num">3</span>The Paradigm</a>
+      <ol>
+        <li><a href="#definition">3.1 Definition</a></li>
+        <li><a href="#homomorphism">3.2 Homomorphism</a></li>
+      </ol>
+    </li>
+    <li>
+      <a href="#gap"><span class="toc-num">4</span>The Sim-to-Stage Gap</a>
+      <ol>
+        <li><a href="#gap-definition">4.1 Definition</a></li>
+        <li><a href="#sub-gaps">4.2 Seven Sub-Gaps</a></li>
+      </ol>
+    </li>
+    <li>
+      <a href="#primitives"><span class="toc-num">5</span>Architecture Primitives</a>
+      <ol>
+        <li><a href="#ats">5.1 ATS</a></li>
+        <li><a href="#dip">5.2 DIP</a></li>
+        <li><a href="#specialists">5.3 Specialists</a></li>
+        <li><a href="#gate">5.4 Confirmation Gate</a></li>
+        <li><a href="#sim-env">5.5 Sim Environment</a></li>
+        <li><a href="#compiler">5.6 Cue Compiler</a></li>
+        <li><a href="#provenance">5.7 Provenance Ledger</a></li>
+      </ol>
+    </li>
+    <li><a href="#benchmark"><span class="toc-num">6</span>Toward a Benchmark</a></li>
+    <li><a href="#related"><span class="toc-num">7</span>Related Work</a></li>
+    <li><a href="#discussion"><span class="toc-num">8</span>Discussion &amp; Limitations</a></li>
+    <li><a href="#conclusion"><span class="toc-num">9</span>Conclusion</a></li>
+    <li><a href="#citation"><span class="toc-num">·</span>Citation</a></li>
+  </ol>
+</nav>
+
+<main class="content">
+
+<section id="abstract">
+  <div class="abstract">
+    <div class="abstract-label">Abstract</div>
+    <p>We introduce <strong>Sim-to-Stage</strong>: a paradigm for compiling director intent into rehearsable, executable, audit-traceable live-stage artifacts under a single authoritative truth source. Sim-to-Stage is to live performance production what <strong>Sim-to-Real</strong> is to robotics — a discipline for training, validating, and transferring complex multi-modal artifacts from a simulation environment to a real-world target. In Sim-to-Stage, the real-world target is the live stage and the live audience. We define the <strong>Sim-to-Stage gap</strong> as the paradigm's central technical challenge and decompose it into seven open sub-gaps. We propose seven <strong>architecture primitives</strong> — one useful decomposition that a mature Sim-to-Stage system is likely to instantiate variants of — abstracted from an early reference implementation in development at StageR. This position paper is a starting coordinate, not a solved problem; we explicitly invite external research groups, theater companies, and live-production industrial implementers to extend, contest, and improve the paradigm.</p>
+  </div>
 </section>
 
-<section class="block">
-  <h2>&sect; 2 &middot; The Gap</h2>
-  <h3>The Sim-to-Stage gap is the family of discrepancies between simulated rehearsal and live performance.</h3>
-  <p>Like the Sim-to-Real gap in robotics, the Sim-to-Stage gap is not a single phenomenon but a structural collection of distinct sub-gaps. The position paper identifies seven: timing variability, director authority, multi-modal coherence, human execution, one-shot deployment, long-horizon narrative, and aesthetic judgment. Each admits independent research. None is solved.</p>
+<section id="introduction">
+  <h2><span class="section-num">Section 1</span>Introduction</h2>
+
+  <p>A live theatrical performance is a coordinated multi-modal artifact: script, blocking, lighting cues, sound cues, video projections, scenic transitions, performer interpretation, audience interaction — all unfolding in real time over an evening of performance. Producing such an artifact at high quality has historically been organized through human craft alone: directors, designers, technicians, and performers iterating across weeks of rehearsal, accumulating implicit knowledge that lives in production journals, cue sheets, and individual memory.</p>
+
+  <p>In the past three years, three forces have arrived simultaneously that change the underlying engineering question.</p>
+
+  <p>First, large language models and multi-modal generative models have become sufficiently capable to participate as collaborators in theatrical creative work — not merely as tools for narrow tasks, but as departmental specialists.</p>
+
+  <p>Second, the robotics community has formalized <strong>Sim-to-Real</strong> as a paradigm for transferring policies trained in simulation to physical deployment, complete with mitigation techniques (domain randomization, system identification, residual learning) and a vocabulary of "gap" diagnosis.</p>
+
+  <p>Third, the AI infrastructure community has converged on <strong>world models</strong> — large-scale simulations of physical or social environments — as a primary research direction.</p>
+
+  <p>These three forces converge on a question: <strong>what would it look like to produce a live performance the way modern robotics produces a deployed policy?</strong> That is — to simulate the production end-to-end in a director-gated environment, to validate the simulated rehearsal against a single authoritative truth source, and to compile the validated simulation into one-shot executable artifacts that human performers and technical crew deploy on the live stage. We call this paradigm <strong>Sim-to-Stage</strong>.</p>
+
+  <p>This paper makes four contributions:</p>
+
+  <ol class="contributions">
+    <li>We define the Sim-to-Stage paradigm precisely (Section&nbsp;<a href="#paradigm">3</a>).</li>
+    <li>We construct a structural <strong>homomorphism</strong> between Sim-to-Real (robotics) and Sim-to-Stage (live performance), showing the two are not merely analogous in metaphor but structurally homologous as engineering pipelines (Section&nbsp;<a href="#homomorphism">3.2</a>).</li>
+    <li>We define the <strong>Sim-to-Stage gap</strong> as the paradigm's central open problem and decompose it into seven distinct sub-gaps that admit independent research (Section&nbsp;<a href="#gap">4</a>).</li>
+    <li>We propose seven <strong>architecture primitives</strong> — one useful decomposition that a mature Sim-to-Stage system is likely to instantiate variants of (Section&nbsp;<a href="#primitives">5</a>).</li>
+  </ol>
+
+  <p>We are deliberate about what this paper does <strong>not</strong> claim. We do not claim the Sim-to-Stage gap has been closed. We do not claim the reference implementation has solved the seven primitives in their general form. We do not claim the paradigm subsumes all live-performance production — only that it provides a useful frame for one mode of production-augmented work. Section&nbsp;<a href="#discussion">8</a> details limitations and open questions in full.</p>
 </section>
 
-<section class="block">
-  <h2>&sect; 3 &middot; The Reference Implementation</h2>
-  <h3>StageR is an early reference implementation of the Sim-to-Stage paradigm.</h3>
-  <p>The paradigm is intended to be larger than any single implementation. StageR is currently in active development as one such implementation; external research groups, theater companies, and live-production implementers are invited to instantiate the paradigm independently.</p>
+<section id="background">
+  <h2><span class="section-num">Section 2</span>Background</h2>
+
+  <h3 id="sim-to-real"><span class="subsection-num">2.1</span>The Sim-to-Real Paradigm</h3>
+
+  <p>The Sim-to-Real paradigm originates in robotics, where the cost and risk of training control policies directly on physical robots motivated a transfer-learning approach: train policies in a physics simulator (Isaac Sim, MuJoCo, Habitat, CARLA), then deploy to physical hardware. The central technical problem is the <strong>Sim-to-Real gap</strong> — the discrepancy between the simulator and the physical world that causes a policy trained in sim to fail on real hardware.</p>
+
+  <p>Three families of mitigation are well-established. <strong>Domain randomization</strong> trains the policy across a distribution of simulator parameters (mass, friction, lighting) so the real world appears as one of many seen environments. <strong>System identification</strong> estimates the parameters of the physical world to bring the simulator into closer correspondence with reality. <strong>Residual policy learning</strong> trains a corrective policy on top of the sim-trained policy that learns to account for residual sim-to-real discrepancy.</p>
+
+  <p>The Sim-to-Real paradigm has become canonical in robotics because it makes a previously intractable engineering question tractable: it gives the field a <em>vocabulary</em> (the gap, the mitigations), a <em>benchmark structure</em> (sim eval + transfer eval), and an <em>architectural pattern</em> (sim trainer, transfer step, deployment policy). This paper proposes that live performance production stands today in a similar position to robotics circa 2015, and that an analogous paradigm — Sim-to-Stage — provides similar vocabulary, structure, and pattern.</p>
+
+  <h3 id="live-production-today"><span class="subsection-num">2.2</span>Live Performance Production Today</h3>
+
+  <p>Many productions unfold over weeks or months of rehearsal, technical preparation, and previews. The artifact that ultimately runs on stage is the joint product of dozens of specialists: director, dramaturg, lighting designer, sound designer, video designer, scenic designer, costume designer, stage manager, technical director, and a cast of performers. The coordination problem alone is substantial; the creative problem is, by traditional account, the entirety of theatrical art.</p>
+
+  <p>Several technological currents already exist in live-production practice. Stage management software (QLab, ETC Eos, Disguise) captures cue scripts and operates them at performance time. Digital previz tools (Capture, WYSIWYG, depence²) allow lighting and projection designers to preview their work before installation. Collaborative document tools and shared cue sheets manage cross-department coordination. However, these tools operate as <strong>departmental islands</strong>: each specialist's tool optimizes that specialist's work in isolation, with handoffs across department boundaries handled through unstructured human communication.</p>
+
+  <p>The Sim-to-Stage paradigm proposes a different architecture: a <strong>single director-gated truth source</strong> representing the production, against which all specialist work is reconciled; a <strong>multi-modal simulation environment</strong> in which the production can be rehearsed end-to-end across modalities; and a <strong>compiler</strong> that translates the validated simulation into one-shot executable artifacts deployable by the human performers and technical crew.</p>
+
+  <h3 id="why-now"><span class="subsection-num">2.3</span>Why "Sim-to-Stage" Now</h3>
+
+  <p>Three preconditions for Sim-to-Stage have arrived approximately together in 2024–2026:</p>
+
+  <ol>
+    <li><strong>Multi-modal generative models</strong> are now capable of producing draft artifacts (lighting plots, sound compositions, video sequences, scenic visualizations) at quality sufficient for director review and iteration. This makes specialist agents tractable.</li>
+    <li><strong>Long-context and persistent-memory language models</strong> can hold an entire production's worth of script, notes, blocking, and rationale in working memory, enabling a Director Intelligence Profile that remembers across rehearsals.</li>
+    <li><strong>Sim-to-Real</strong> as a paradigm has matured to the point that its vocabulary and architectural lessons (gap diagnosis, mitigation families, benchmark structure) can be ported to adjacent transfer domains.</li>
+  </ol>
+
+  <p>The Sim-to-Stage paradigm therefore arrives at a specific historical moment, and we believe the moment is genuinely open: we are not aware of a widely adopted canonical paradigm for this domain.</p>
 </section>
 
-<section class="block" style="border-bottom: none;">
-  <h2>Read &middot; Cite &middot; Contribute</h2>
-  <ul class="links">
-    <li><a href="/paper.html">Position Paper v0.1 &mdash; read on this site</a></li>
-    <li><a href="https://github.com/sim-to-stage/sim-to-stage/blob/main/paper.md">paper.md &mdash; canonical Markdown source on GitHub</a></li>
-    <li><a href="https://github.com/sim-to-stage/sim-to-stage">Canonical GitHub repository</a></li>
-    <li><a href="https://github.com/sim-to-stage/sim-to-stage/blob/main/CITATION.cff">Citation &mdash; CITATION.cff</a></li>
-    <li>StageR &mdash; an early reference implementation (public preview pending)</li>
+<section id="paradigm">
+  <h2><span class="section-num">Section 3</span>The Sim-to-Stage Paradigm</h2>
+
+  <h3 id="definition"><span class="subsection-num">3.1</span>Definition</h3>
+
+  <p><strong>Sim-to-Stage</strong> is a paradigm for producing live performances in which:</p>
+
+  <ol>
+    <li>The production is represented as an <strong>authoritative, director-gated, multi-modal artifact</strong> (the Authoritative Truth Source — Section&nbsp;<a href="#ats">5.1</a>) maintained as a single source of truth across all departments.</li>
+    <li>The production is <strong>rehearsed end-to-end in a simulation environment</strong> that models, to varying fidelity, lighting state, sound state, video state, scenic state, blocking, and performance timing.</li>
+    <li>Specialist work is contributed by <strong>department-level agents</strong> (human or AI) whose proposals are reconciled against the truth source through <strong>director-mediated confirmation gates</strong>.</li>
+    <li>The validated simulation is <strong>compiled into one-shot executable artifacts</strong> (cue scripts, packages, briefings) that human performers and technical crew deploy on the live stage.</li>
+    <li>Every decision, every gate, every revision is recorded in a <strong>provenance ledger</strong> that maintains audit traceability from director intent to live execution.</li>
+  </ol>
+
+  <p>A Sim-to-Stage system is one that instantiates variants of these five properties. An early reference implementation is StageR (<a href="https://simtostage.com">simtostage.com</a>), but the paradigm is intended to be larger than any single implementation, and we invite external groups to instantiate it independently.</p>
+
+  <h3 id="homomorphism"><span class="subsection-num">3.2</span>Homomorphism with Sim-to-Real</h3>
+
+  <p>Sim-to-Stage is not merely analogous to Sim-to-Real in metaphor; the two paradigms exhibit a structural <strong>homomorphism</strong> — a systematic correspondence of roles between the two transfer pipelines. Table&nbsp;1 documents the correspondence.</p>
+
+  <div class="table-wrap">
+    <div class="table-caption"><span class="label">Table 1</span>The Sim-to-Real ↔ Sim-to-Stage Homomorphism</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Sim-to-Real (Robotics)</th>
+          <th>Sim-to-Stage (Live Performance)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Target domain</td><td>Physical world</td><td>Live stage / live audience</td></tr>
+        <tr><td>Simulator</td><td>Physics engine (Isaac Sim, MuJoCo)</td><td>Stage simulation environment</td></tr>
+        <tr><td>Object of transfer</td><td>Robot policy / control program</td><td>Cue script + production package</td></tr>
+        <tr><td>Source of truth</td><td>Reward function</td><td>Director intent (codified, gated)</td></tr>
+        <tr><td>Validation</td><td>Simulated rollout</td><td>Simulated rehearsal</td></tr>
+        <tr class="highlight"><td>Transfer challenge</td><td>Sim-to-real gap</td><td><strong>Sim-to-stage gap (this paper)</strong></td></tr>
+        <tr><td>Mitigation: randomization</td><td>Domain randomization</td><td>Variability rehearsal</td></tr>
+        <tr><td>Mitigation: identification</td><td>System identification</td><td>Performer / venue identification</td></tr>
+        <tr><td>Mitigation: residual</td><td>Residual policy learning</td><td>Dress-rehearsal residual adjustment</td></tr>
+        <tr><td>Executor</td><td>Robot embodiment</td><td>Human performers + technical crew</td></tr>
+        <tr><td>Re-run semantics</td><td>Possible (deploy, observe, redeploy)</td><td>One-shot per show (previews are imperfect dress-rehearsals)</td></tr>
+        <tr><td>Success criterion</td><td>Task-completion metric</td><td>Director judgment + audience response (partially aesthetic)</td></tr>
+        <tr><td>Multi-agent structure</td><td>Single robot or fleet</td><td>Irreducibly multi-department (lighting, sound, video, scenic, blocking, script) plus cast</td></tr>
+        <tr><td>Governance</td><td>Safety review, deployment gate</td><td>Director-gated Confirmation Gates, technical and dress rehearsal sign-offs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>We claim this homomorphism is more than a stylistic flourish: it identifies an engineering correspondence we believe is load-bearing. Each row of Table&nbsp;1 maps a Sim-to-Real role to a Sim-to-Stage role that occupies the same structural position in the transfer pipeline. We argue the homomorphism licenses the import of Sim-to-Real's accumulated engineering wisdom — randomization-style mitigation, identification-style mitigation, residual-style mitigation, deployment-gate governance — into Sim-to-Stage practice. The remaining sections develop the specifics.</p>
+</section>
+
+<section id="gap">
+  <h2><span class="section-num">Section 4</span>The Sim-to-Stage Gap</h2>
+
+  <h3 id="gap-definition"><span class="subsection-num">4.1</span>Definition</h3>
+
+  <p>We define the <strong>Sim-to-Stage gap</strong> as the family of discrepancies between a simulated rehearsal and the live performance that cause a Sim-validated production package to fail on the live stage. Like the Sim-to-Real gap in robotics, the Sim-to-Stage gap is not a single phenomenon but a structural collection of distinct sub-gaps, each amenable to its own analysis and mitigation. Closing the Sim-to-Stage gap is the central open research program of the paradigm.</p>
+
+  <h3 id="sub-gaps"><span class="subsection-num">4.2</span>Seven Identified Sub-Gaps</h3>
+
+  <p>We identify seven sub-gaps. We do not claim the list is exhaustive; we claim it is <em>useful</em>: each sub-gap is independently studyable, and progress on any one is progress on the paradigm. Each sub-gap is named, defined, and connected to a candidate research direction.</p>
+
+  <div class="subgap" id="subgap-1">
+    <div class="subgap-head">
+      <span class="subgap-num">Sub-gap 1</span>
+      <span class="subgap-name">The Timing-Variability gap</span>
+    </div>
+    <p>Simulated rehearsal runs against a synthetic clock; live performance runs against human performance timing, which varies with audience response, performer state, and unrepeatable contingency. A cue script that fires precisely on a synthetic clock will fail when human performance is faster, slower, or restructured by ad-lib.</p>
+    <p class="direction"><em>Candidate direction —</em> robust cue compilation that admits a tolerance window per cue, with sim-time domain randomization across performance-timing distributions.</p>
+  </div>
+
+  <div class="subgap" id="subgap-2">
+    <div class="subgap-head">
+      <span class="subgap-num">Sub-gap 2</span>
+      <span class="subgap-name">The Director-Authority gap</span>
+    </div>
+    <p>In Sim-to-Real, the reward function is the authority — a formal mathematical object. In Sim-to-Stage, the director's intent is the authority, but intent is informal: aesthetic, stylistic, intuitive, evolving through rehearsal. How does a system formalize an informal authority sufficiently that the rest of the pipeline can act on it, without flattening the aesthetic content?</p>
+    <p class="direction"><em>Candidate direction —</em> the Director Intelligence Profile (Section&nbsp;<a href="#dip">5.2</a>) — a model of director preference that combines explicit declared rules, learned stylistic patterns, and decision-by-decision confirmation.</p>
+  </div>
+
+  <div class="subgap" id="subgap-3">
+    <div class="subgap-head">
+      <span class="subgap-num">Sub-gap 3</span>
+      <span class="subgap-name">The Multi-Modal Coherence gap</span>
+    </div>
+    <p>A live performance is a joint artifact across lighting, sound, video, scenic, blocking, script, and performer interpretation. Each modality has its own conventions, file formats, and specialist tools. Simulating one modality well is tractable; simulating all coherently is harder, and preserving coherence under transfer is harder still.</p>
+    <p class="direction"><em>Candidate direction —</em> specialist production agents (Section&nbsp;<a href="#specialists">5.3</a>) coordinating against a shared Authoritative Truth Source (Section&nbsp;<a href="#ats">5.1</a>), with cross-modal coherence checks at each Confirmation Gate.</p>
+  </div>
+
+  <div class="subgap" id="subgap-4">
+    <div class="subgap-head">
+      <span class="subgap-num">Sub-gap 4</span>
+      <span class="subgap-name">The Human-Execution gap</span>
+    </div>
+    <p>Robots execute the deployed policy autonomously. In Sim-to-Stage, the deployed artifact is executed by humans — actors interpret blocking, stage managers call cues, technicians operate consoles. Each human introduces interpretation, slippage, and modification. How does a sim-validated artifact survive contact with human execution?</p>
+    <p class="direction"><em>Candidate direction —</em> compilation targets that explicitly model human execution affordances (cue scripts written for human operators; rehearsable, not just executable), and previews / dress rehearsals as transfer-validation checkpoints.</p>
+  </div>
+
+  <div class="subgap" id="subgap-5">
+    <div class="subgap-head">
+      <span class="subgap-num">Sub-gap 5</span>
+      <span class="subgap-name">The One-Shot Deployment gap</span>
+    </div>
+    <p>A robot policy can fail in deployment, be observed, and be redeployed after a fix. A live performance is one-shot per show: there is no retry. Sim-validation must be sufficient for one-shot deployment, a regime closer to safety-critical Sim-to-Real (surgical robotics, aerospace) than to typical robotics.</p>
+    <p class="direction"><em>Candidate direction —</em> layered defense — sim eval, then specialist eval, then technical rehearsal eval, then dress-rehearsal eval, then preview eval — with each layer admitting only what the previous layer validated.</p>
+  </div>
+
+  <div class="subgap" id="subgap-6">
+    <div class="subgap-head">
+      <span class="subgap-num">Sub-gap 6</span>
+      <span class="subgap-name">The Long-Horizon Narrative gap</span>
+    </div>
+    <p>A robot policy may have a horizon of seconds to minutes; a live performance typically has a horizon of an hour or more of continuous interconnected causal narrative (foreshadowing, character arcs, dramatic structure, payoff). Local Sim-validation of each scene does not imply global validation of long-horizon coherence.</p>
+    <p class="direction"><em>Candidate direction —</em> narrative-aware Project Intelligence (a long-context understanding component) coupled with explicit dramaturgical evaluation criteria during sim rehearsal.</p>
+  </div>
+
+  <div class="subgap" id="subgap-7">
+    <div class="subgap-head">
+      <span class="subgap-num">Sub-gap 7</span>
+      <span class="subgap-name">The Aesthetic-Judgment gap</span>
+    </div>
+    <p>Robot success criteria are predominantly functional (the robot completed the task or not). Live performance success criteria are partially aesthetic — was the moment moving, did the comedy land, did the audience lean in. Even formal metrics (run time, sound level, cue precision) underdetermine aesthetic success.</p>
+    <p class="direction"><em>Candidate direction —</em> the Director Intelligence Profile as aesthetic judge (Section&nbsp;<a href="#dip">5.2</a>), combined with structured audience response signals in previews; explicit acknowledgment that aesthetic judgment will remain partially human throughout the paradigm's lifetime.</p>
+  </div>
+
+  <p>These seven sub-gaps are the proposed map of the Sim-to-Stage research territory. We invite extension, refinement, and challenge.</p>
+</section>
+
+<section id="primitives">
+  <h2><span class="section-num">Section 5</span>Architecture Primitives</h2>
+
+  <p>We propose the following seven architecture primitives as one useful decomposition of a Sim-to-Stage system. We expect a mature Sim-to-Stage system to instantiate variants of these primitives, but we do not claim this decomposition is unique or exhaustive (see Section&nbsp;<a href="#discussion">8</a>). We define each primitive at the paradigm level — the role it plays, the interface it presents to the rest of the system — without committing to implementation details, which are properly the subject of later technical reports.</p>
+
+  <div class="primitive">
+    <h3 id="ats"><span class="subsection-num">5.1</span>The Authoritative Truth Source (ATS)</h3>
+    <p>The ATS is a single, canonical, append-only registry of the production state: the script as currently authorized, the blocking as currently authorized, the cue list as currently authorized, the design choices as currently authorized. Every other component of the system reads from the ATS and proposes against it; only Confirmation Gates (Section&nbsp;<a href="#gate">5.4</a>) admit writes to it. The ATS is the formal codification of "the production as the director currently authorizes it."</p>
+    <p class="primitive-role"><strong>Role in the homomorphism</strong>the ATS is the Sim-to-Stage analog of the policy parameter set in Sim-to-Real — the canonical object being trained, validated, and transferred.</p>
+  </div>
+
+  <div class="primitive">
+    <h3 id="dip"><span class="subsection-num">5.2</span>The Director Intelligence Profile (DIP)</h3>
+    <p>The DIP is the system's model of the director: their declared aesthetic rules, their stylistic patterns inferred from prior decisions, their preferences for ambiguity resolution, and their authority delegation policy (what they decide themselves vs. what specialists may decide). The DIP is the mechanism by which the informal authority of director intent is rendered partially formal — enough to drive specialist proposals and Sim evaluation, without flattening aesthetic judgment.</p>
+    <p class="primitive-role"><strong>Role in the homomorphism</strong>the DIP is the Sim-to-Stage analog of the reward function in Sim-to-Real. Where robotics often gets a single mathematical reward function, Sim-to-Stage gets a partial, evolving, gated stand-in.</p>
+  </div>
+
+  <div class="primitive">
+    <h3 id="specialists"><span class="subsection-num">5.3</span>Specialist Production Agents</h3>
+    <p>Specialist agents are domain-specific generative and orchestration components: a lighting agent that drafts lighting plots and cues, a sound agent for sound, a video agent for video, a scenic agent for scenic, a blocking agent for blocking, and so on. Each specialist agent reads the current ATS, proposes changes against it, and submits proposals to the Confirmation Gate for the relevant department. Specialists may be AI agents, human professionals using AI-augmented tools, or any combination.</p>
+    <p class="primitive-role"><strong>Role in the homomorphism</strong>specialist agents are the Sim-to-Stage analog of the multi-agent or multi-skill policy structures emerging in robotics fleet learning. Live performance is irreducibly multi-department, so this multi-agent structure is structurally necessary, not stylistic.</p>
+  </div>
+
+  <div class="primitive">
+    <h3 id="gate"><span class="subsection-num">5.4</span>The Confirmation Gate</h3>
+    <p>A Confirmation Gate is the director-mediated decision point at which specialist proposals are evaluated and either accepted into the ATS, rejected, or returned for revision. Confirmation Gates may be high-touch (the director reviews each proposal individually) or low-touch (specialists operate within director-declared autonomy bands and only flag edge cases), but they are always present as the authorization mechanism. The Confirmation Gate is the formal site at which director authority enters the pipeline.</p>
+    <p class="primitive-role"><strong>Role in the homomorphism</strong>the Confirmation Gate is the Sim-to-Stage analog of the deployment gate in safety-critical Sim-to-Real practice — the explicit moment at which "this artifact is authorized for the next stage."</p>
+  </div>
+
+  <div class="primitive">
+    <h3 id="sim-env"><span class="subsection-num">5.5</span>The Stage Simulation Environment</h3>
+    <p>The Stage Simulation Environment is the sim itself: a multi-modal model of the live stage at some fidelity — lighting state, sound state, video state, scenic state, blocking, performer timing. The Sim Environment runs the validated ATS as a simulated rehearsal, surfacing problems (cross-modal incoherence, dramatic dead spots, technical conflicts) before they appear in physical rehearsal.</p>
+    <p class="primitive-role"><strong>Role in the homomorphism</strong>the Sim Environment is the Sim-to-Stage analog of the physics simulator in Sim-to-Real. It is the substrate of the paradigm; the rest of the system is defined relative to it.</p>
+  </div>
+
+  <div class="primitive">
+    <h3 id="compiler"><span class="subsection-num">5.6</span>The Cue Compiler</h3>
+    <p>The Cue Compiler is the component that translates the Sim-validated ATS into one-shot executable artifacts for live execution: cue scripts callable by stage management, console programs deployable to lighting / sound / video consoles, briefing packages for cast and technical crew. The Cue Compiler is responsible for materializing the sim's validated state into formats that live execution can act on.</p>
+    <p class="primitive-role"><strong>Role in the homomorphism</strong>the Cue Compiler is the Sim-to-Stage analog of the policy export step in Sim-to-Real — the moment at which the sim-internal representation is converted into a deployable artifact.</p>
+  </div>
+
+  <div class="primitive">
+    <h3 id="provenance"><span class="subsection-num">5.7</span>The Provenance Ledger</h3>
+    <p>The Provenance Ledger is an append-only audit trail of every decision in the production: every specialist proposal, every Confirmation Gate outcome, every ATS revision, every Sim rehearsal verdict. The ledger enables accountability ("who decided this and why"), reproducibility ("what was the state of the ATS at this point"), and downstream learning (training the DIP on the director's actual revealed decisions over time).</p>
+    <p class="primitive-role"><strong>Role in the homomorphism</strong>the Provenance Ledger is the Sim-to-Stage analog of the experiment log and model registry in modern robotics MLOps practice.</p>
+  </div>
+</section>
+
+<section id="benchmark">
+  <h2><span class="section-num">Section 6</span>Toward a Sim-to-Stage Benchmark</h2>
+
+  <p>A paradigm is established not only by its definition but by the benchmark community against which progress is measured. We sketch the structure of a Sim-to-Stage benchmark here; the full proposal will land separately as <code>benchmark.md</code> in this repository.</p>
+
+  <p>We propose that a Sim-to-Stage benchmark should evaluate, at minimum:</p>
+
+  <ul>
+    <li><strong>Cross-modal coherence</strong> — does the Sim-rehearsed production exhibit consistent lighting / sound / video / scenic / blocking coordination at each cue point?</li>
+    <li><strong>Transfer fidelity</strong> — does the executed live performance match the Sim-rehearsed state on observable dimensions (cue timing, cross-modal coordination, executed-vs-planned divergence)?</li>
+    <li><strong>Director-intent retention</strong> — does the executed production preserve the director's declared aesthetic and stylistic priorities as recorded in the DIP?</li>
+    <li><strong>Audit traceability</strong> — for any property of the executed production, can the Provenance Ledger trace it back to a declared director decision?</li>
+    <li><strong>Production efficiency</strong> — does the paradigm reduce the wall-clock effort to producible state, relative to the unaided baseline?</li>
+  </ul>
+
+  <p>A serious Sim-to-Stage benchmark will require a benchmark <em>corpus</em> of productions across genres, scales, and traditions. We invite participation in defining this corpus.</p>
+</section>
+
+<section id="related">
+  <h2><span class="section-num">Section 7</span>Related Work</h2>
+
+  <p>The Sim-to-Stage paradigm draws on, and is meant to extend, several adjacent literatures.</p>
+
+  <ul>
+    <li><strong>Sim-to-Real in robotics</strong> is the immediate ancestor; the homomorphism in Section&nbsp;<a href="#homomorphism">3.2</a> is the formal statement of the inheritance.</li>
+    <li><strong>World models</strong> in machine learning provide simulation substrate techniques applicable to Sim-to-Stage rehearsal environments.</li>
+    <li><strong>Multi-agent systems</strong> literature informs the specialist production agent layer.</li>
+    <li><strong>Theater production scholarship</strong> — production journals, design process literature, the history of stage management — provides the ground truth against which any Sim-to-Stage system must be evaluated.</li>
+    <li><strong>Live production tooling</strong> — QLab, ETC Eos, Disguise, Capture, WYSIWYG, depence² — represents the departmental-island state of the practice that Sim-to-Stage proposes to unify under a shared truth source.</li>
+  </ul>
+
+  <p>We will expand related-work coverage in subsequent revisions.</p>
+</section>
+
+<section id="discussion">
+  <h2><span class="section-num">Section 8</span>Discussion and Limitations</h2>
+
+  <p>We are explicit about what this position paper does <strong>not</strong> claim and where the paradigm's open problems remain.</p>
+
+  <ul>
+    <li><strong>The seven sub-gaps are unsolved.</strong> We have named them, not closed them. Each is a research direction, not a result.</li>
+    <li><strong>The seven architecture primitives are not unique.</strong> Other decompositions of a Sim-to-Stage system are possible. We claim ours is <em>useful</em>, not <em>exclusive</em>.</li>
+    <li><strong>Aesthetic judgment will remain partially human.</strong> Sub-gap 7 is, in our view, partially irreducible; we do not propose the paradigm fully formalizes theatrical taste, only that the DIP and the Confirmation Gate provide the right interfaces for human aesthetic judgment to enter the pipeline.</li>
+    <li><strong>The paradigm has not been validated at scale.</strong> The reference implementation StageR is in development. We are honest that this paper is, at its publication date, ahead of empirical evidence. Subsequent papers in this repository will report on empirical progress as it accumulates.</li>
+    <li><strong>The paradigm may not cover all live production.</strong> Some traditions — devised work, improvisation-heavy forms, audience-participatory performance — may fit awkwardly into the ATS / Confirmation Gate / Cue Compiler structure. We do not claim universal applicability.</li>
   </ul>
 </section>
 
-<p class="guard">This is a position paper and paradigm proposal, not a claim that the Sim-to-Stage gap has been solved. The seven sub-gaps named in <a href="/paper.html">the position paper</a> are open research directions; the seven architecture primitives are one useful decomposition, not the only one. Subsequent revisions are expected to be substantial.</p>
+<section id="conclusion">
+  <h2><span class="section-num">Section 9</span>Conclusion</h2>
 
-<div class="zh">Sim-to-Stage：把脑中的演出预演出来，再带到真实舞台。</div>
+  <p>We have introduced the Sim-to-Stage paradigm: a structural homomorphism of Sim-to-Real adapted to the domain of live performance production. We have defined the Sim-to-Stage gap as the paradigm's central open problem and decomposed it into seven sub-gaps. We have proposed seven architecture primitives as one useful decomposition that a mature Sim-to-Stage system will likely instantiate variants of. We have sketched the structure of a Sim-to-Stage benchmark.</p>
 
-<footer>
-  <div>Sim-to-Stage Research &middot; 2026 &middot; Licensed under <a href="https://github.com/sim-to-stage/sim-to-stage/blob/main/LICENSE">CC BY 4.0</a></div>
-  <div>Canonical: <a href="https://github.com/sim-to-stage/sim-to-stage">github.com/sim-to-stage/sim-to-stage</a></div>
+  <p>We are at the beginning of this research program, not the end. We invite extensions, refinements, challenges, and alternative formulations from external research groups, theater companies, and live-production industrial implementers. The paradigm belongs to its community; this paper is a starting coordinate.</p>
+</section>
+
+<section id="citation">
+  <h2><span class="section-num">Citation</span>How to Cite</h2>
+
+  <p>If you reference the term "Sim-to-Stage" or this paradigm in academic or industrial work, please cite:</p>
+
+  <pre><code>@misc{chen2026simtostage,
+  title  = {Sim-to-Stage: A Paradigm for Live Performance Production},
+  author = {Chen, Tiantian},
+  year   = {2026},
+  doi    = {10.5281/zenodo.20175082},
+  url    = {https://doi.org/10.5281/zenodo.20175082},
+  note   = {Position paper v0.1.
+            Canonical repository: https://github.com/sim-to-stage/sim-to-stage}
+}</code></pre>
+
+  <p>A machine-readable <a href="https://github.com/sim-to-stage/sim-to-stage/blob/main/CITATION.cff"><code>CITATION.cff</code></a> is provided in the canonical repository and powers GitHub's "Cite this repository" auto-export.</p>
+
+  <h3 id="license"><span class="subsection-num">·</span>License</h3>
+
+  <p>This work is licensed under <a href="https://github.com/sim-to-stage/sim-to-stage/blob/main/LICENSE">Creative Commons Attribution 4.0 International (CC BY 4.0)</a>. You may use, share, adapt, translate, and build upon this material — including for commercial purposes — provided you give appropriate credit. The paradigm belongs to its community; the license invites contribution.</p>
+
+  <h3 id="versioning"><span class="subsection-num">·</span>Versioning</h3>
+
+  <p>This is Position Paper <strong>v0.1</strong>. We expect substantial revision in v0.2 and v0.3 as the paradigm matures, additional empirical evidence accumulates, and external contributors challenge or extend the formulation. We welcome issues and pull requests on the <a href="https://github.com/sim-to-stage/sim-to-stage">canonical repository</a>.</p>
+</section>
+
+</main>
+</div>
+
+<footer class="paper-footer">
+  <div>Sim-to-Stage Research <span class="divider">·</span> 2026 <span class="divider">·</span> Licensed under <a href="https://github.com/sim-to-stage/sim-to-stage/blob/main/LICENSE">CC BY 4.0</a></div>
+  <div><a href="/">simtostage.com</a> <span class="divider">·</span> <a href="https://github.com/sim-to-stage/sim-to-stage">github.com/sim-to-stage/sim-to-stage</a> <span class="divider">·</span> <a href="https://github.com/sim-to-stage/sim-to-stage/blob/main/paper.md">View source (paper.md)</a></div>
 </footer>
 
-</div>
 </body>
 </html>
