@@ -29,3 +29,7 @@ keywords:
   - simulation-environment
   - director-gated
 license: CC-BY-4.0
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.20175082
+    description: "Zenodo preprint v1, published 2026-05-14"

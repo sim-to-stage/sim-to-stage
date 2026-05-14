@@ -245,12 +245,13 @@ We are at the beginning of this research program, not the end. We invite extensi
 If you reference the term "Sim-to-Stage" or this paradigm in academic or industrial work, please cite:
 
 ```bibtex
-@misc{simtostage2026,
+@misc{chen2026simtostage,
   title  = {Sim-to-Stage: A Paradigm for Live Performance Production},
-  author = {{Sim-to-Stage Research}},
+  author = {Chen, Tiantian},
   year   = {2026},
-  url    = {https://simtostage.com},
-  note   = {Position paper v0.1.
+  doi    = {10.5281/zenodo.20175082},
+  url    = {https://doi.org/10.5281/zenodo.20175082},
+  note   = {Position paper v0.1, published 2026-05-14.
             Canonical repository: https://github.com/sim-to-stage/sim-to-stage}
 }
 ```
