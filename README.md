@@ -70,7 +70,7 @@ You may use, share, adapt, and translate the material freely with attribution.
 
 ## Reference implementation
 
-The first reference implementation of the Sim-to-Stage paradigm is
+An early reference implementation of the Sim-to-Stage paradigm is
 [StageR](https://simtostage.com), a director-gated multi-agent stage simulation
 environment. StageR is currently in incubation and shares no operational
 control with this paradigm repository — the paradigm is intended to be larger
@@ -111,6 +111,6 @@ Sim-to-Stage 范式正式化了这套纪律。
 
 ### 参考实现
 
-Sim-to-Stage 范式的首个参考实现是 [StageR](https://simtostage.com) ——
+Sim-to-Stage 范式的一个早期参考实现是 [StageR](https://simtostage.com) ——
 一个导演裁决型多智能体舞台仿真环境。StageR 目前在孵化中，与本范式仓库不共享运营控制权：
 范式的存续应大于任何单一实现。

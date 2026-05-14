@@ -69,7 +69,7 @@ Three preconditions for Sim-to-Stage have arrived approximately together in 2024
 
 3. **Sim-to-Real** as a paradigm has matured to the point that its vocabulary and architectural lessons (gap diagnosis, mitigation families, benchmark structure) can be ported to adjacent transfer domains.
 
-The Sim-to-Stage paradigm therefore arrives at a specific historical moment, and we believe the moment is genuinely open: no canonical paradigm has yet been published for this domain.
+The Sim-to-Stage paradigm therefore arrives at a specific historical moment, and we believe the moment is genuinely open: we are not aware of a widely adopted canonical paradigm for this domain.
 
 ---
 
