@@ -12,13 +12,13 @@
 
 ## Abstract
 
-We introduce **Sim-to-Stage**: a paradigm for compiling director intent into rehearsable, executable, audit-traceable live-stage artifacts under a single authoritative truth source. Sim-to-Stage is to live performance production what **Sim-to-Real** is to robotics — a discipline for training, validating, and transferring complex multi-modal artifacts from a simulation environment to a real-world target. In Sim-to-Stage, the real-world target is the live stage and the live audience. We define the **Sim-to-Stage gap** as the paradigm's central technical challenge and decompose it into seven open sub-gaps. We propose seven **architecture primitives** that any Sim-to-Stage system must instantiate, abstracted from a reference implementation in development at StageR. This position paper is a starting coordinate, not a solved problem; we explicitly invite external research groups, theater companies, and live-production industrial implementers to extend, contest, and improve the paradigm.
+We introduce **Sim-to-Stage**: a paradigm for compiling director intent into rehearsable, executable, audit-traceable live-stage artifacts under a single authoritative truth source. Sim-to-Stage is to live performance production what **Sim-to-Real** is to robotics — a discipline for training, validating, and transferring complex multi-modal artifacts from a simulation environment to a real-world target. In Sim-to-Stage, the real-world target is the live stage and the live audience. We define the **Sim-to-Stage gap** as the paradigm's central technical challenge and decompose it into seven open sub-gaps. We propose seven **architecture primitives** — one useful decomposition that a mature Sim-to-Stage system is likely to instantiate variants of — abstracted from an early reference implementation in development at StageR. This position paper is a starting coordinate, not a solved problem; we explicitly invite external research groups, theater companies, and live-production industrial implementers to extend, contest, and improve the paradigm.
 
 ---
 
 ## 1. Introduction
 
-A live theatrical performance is a coordinated multi-modal artifact: script, blocking, lighting cues, sound cues, video projections, scenic transitions, performer interpretation, audience interaction — all unfolding in real time over 90 to 180 minutes. Producing such an artifact at high quality has historically been organized through human craft alone: directors, designers, technicians, and performers iterating across weeks of rehearsal, accumulating implicit knowledge that lives in production journals, cue sheets, and individual memory.
+A live theatrical performance is a coordinated multi-modal artifact: script, blocking, lighting cues, sound cues, video projections, scenic transitions, performer interpretation, audience interaction — all unfolding in real time over an evening of performance. Producing such an artifact at high quality has historically been organized through human craft alone: directors, designers, technicians, and performers iterating across weeks of rehearsal, accumulating implicit knowledge that lives in production journals, cue sheets, and individual memory.
 
 In the past three years, three forces have arrived simultaneously that change the underlying engineering question.
 
@@ -33,9 +33,9 @@ These three forces converge on a question: **what would it look like to produce 
 This paper makes four contributions:
 
 1. We define the Sim-to-Stage paradigm precisely (Section 3).
-2. We construct a structural **homomorphism** between Sim-to-Real (robotics) and Sim-to-Stage (live performance), showing the two are not merely analogous in metaphor but isomorphic in engineering structure (Section 3.2).
+2. We construct a structural **homomorphism** between Sim-to-Real (robotics) and Sim-to-Stage (live performance), showing the two are not merely analogous in metaphor but structurally homologous as engineering pipelines (Section 3.2).
 3. We define the **Sim-to-Stage gap** as the paradigm's central open problem and decompose it into seven distinct sub-gaps that admit independent research (Section 4).
-4. We propose seven **architecture primitives** that any Sim-to-Stage system must instantiate (Section 5).
+4. We propose seven **architecture primitives** — one useful decomposition that a mature Sim-to-Stage system is likely to instantiate variants of (Section 5).
 
 We are deliberate about what this paper does **not** claim. We do not claim the Sim-to-Stage gap has been closed. We do not claim the reference implementation has solved the seven primitives in their general form. We do not claim the paradigm subsumes all live-performance production — only that it provides a useful frame for one mode of production-augmented work. Section 8 details limitations and open questions in full.
 
@@ -53,7 +53,7 @@ The Sim-to-Real paradigm has become canonical in robotics because it makes a pre
 
 ### 2.2 Live Performance Production Today
 
-A modern live performance is produced over a typical timeline of 8 to 16 weeks of rehearsal, technical preparation, and previews. The artifact that ultimately runs on stage is the joint product of dozens of specialists: director, dramaturg, lighting designer, sound designer, video designer, scenic designer, costume designer, stage manager, technical director, and a cast of performers. The coordination problem alone is substantial; the creative problem is, by traditional account, the entirety of theatrical art.
+Many productions unfold over weeks or months of rehearsal, technical preparation, and previews. The artifact that ultimately runs on stage is the joint product of dozens of specialists: director, dramaturg, lighting designer, sound designer, video designer, scenic designer, costume designer, stage manager, technical director, and a cast of performers. The coordination problem alone is substantial; the creative problem is, by traditional account, the entirety of theatrical art.
 
 Several technological currents already exist in live-production practice. Stage management software (QLab, ETC Eos, Disguise) captures cue scripts and operates them at performance time. Digital previz tools (Capture, WYSIWYG, depence²) allow lighting and projection designers to preview their work before installation. Collaborative document tools and shared cue sheets manage cross-department coordination. However, these tools operate as **departmental islands**: each specialist's tool optimizes that specialist's work in isolation, with handoffs across department boundaries handled through unstructured human communication.
 
@@ -85,11 +85,11 @@ The Sim-to-Stage paradigm therefore arrives at a specific historical moment, and
 4. The validated simulation is **compiled into one-shot executable artifacts** (cue scripts, packages, briefings) that human performers and technical crew deploy on the live stage.
 5. Every decision, every gate, every revision is recorded in a **provenance ledger** that maintains audit traceability from director intent to live execution.
 
-A Sim-to-Stage system is one that instantiates all five of these properties. The first reference implementation is StageR (https://simtostage.com), but the paradigm is intended to be larger than any single implementation, and we invite external groups to instantiate it independently.
+A Sim-to-Stage system is one that instantiates variants of these five properties. An early reference implementation is StageR (https://simtostage.com), but the paradigm is intended to be larger than any single implementation, and we invite external groups to instantiate it independently.
 
 ### 3.2 Homomorphism with Sim-to-Real
 
-Sim-to-Stage is not merely analogous to Sim-to-Real in metaphor; the two paradigms exhibit a structural **homomorphism** — a one-to-one correspondence of roles between the two transfer pipelines. Table 1 documents the correspondence.
+Sim-to-Stage is not merely analogous to Sim-to-Real in metaphor; the two paradigms exhibit a structural **homomorphism** — a systematic correspondence of roles between the two transfer pipelines. Table 1 documents the correspondence.
 
 **Table 1: The Sim-to-Real ↔ Sim-to-Stage Homomorphism**
 
@@ -110,7 +110,7 @@ Sim-to-Stage is not merely analogous to Sim-to-Real in metaphor; the two paradig
 | Multi-agent structure | Single robot or fleet | Irreducibly multi-department (lighting, sound, video, scenic, blocking, script) plus cast |
 | Governance | Safety review, deployment gate | Director-gated Confirmation Gates, technical and dress rehearsal sign-offs |
 
-We claim this homomorphism is not a stylistic flourish but a genuine engineering correspondence. Each row of Table 1 maps a Sim-to-Real role to a Sim-to-Stage role that occupies the same structural position in the transfer pipeline. We argue the homomorphism licenses the import of Sim-to-Real's accumulated engineering wisdom — randomization-style mitigation, identification-style mitigation, residual-style mitigation, deployment-gate governance — into Sim-to-Stage practice. The remaining sections develop the specifics.
+We claim this homomorphism is more than a stylistic flourish: it identifies an engineering correspondence we believe is load-bearing. Each row of Table 1 maps a Sim-to-Real role to a Sim-to-Stage role that occupies the same structural position in the transfer pipeline. We argue the homomorphism licenses the import of Sim-to-Real's accumulated engineering wisdom — randomization-style mitigation, identification-style mitigation, residual-style mitigation, deployment-gate governance — into Sim-to-Stage practice. The remaining sections develop the specifics.
 
 ---
 
@@ -134,7 +134,7 @@ We identify seven sub-gaps. We do not claim the list is exhaustive; we claim it 
 
 **Sub-gap 5 · The One-Shot Deployment gap.** A robot policy can fail in deployment, be observed, and be redeployed after a fix. A live performance is one-shot per show: there is no retry. Sim-validation must be sufficient for one-shot deployment, a regime closer to safety-critical Sim-to-Real (surgical robotics, aerospace) than to typical robotics. *Candidate direction:* layered defense — sim eval, then specialist eval, then technical rehearsal eval, then dress-rehearsal eval, then preview eval — with each layer admitting only what the previous layer validated.
 
-**Sub-gap 6 · The Long-Horizon Narrative gap.** A robot policy may have a horizon of seconds to minutes; a live performance has a horizon of 90 to 180 minutes of continuous interconnected causal narrative (foreshadowing, character arcs, dramatic structure, payoff). Local Sim-validation of each scene does not imply global validation of long-horizon coherence. *Candidate direction:* narrative-aware Project Intelligence (a long-context understanding component) coupled with explicit dramaturgical evaluation criteria during sim rehearsal.
+**Sub-gap 6 · The Long-Horizon Narrative gap.** A robot policy may have a horizon of seconds to minutes; a live performance typically has a horizon of an hour or more of continuous interconnected causal narrative (foreshadowing, character arcs, dramatic structure, payoff). Local Sim-validation of each scene does not imply global validation of long-horizon coherence. *Candidate direction:* narrative-aware Project Intelligence (a long-context understanding component) coupled with explicit dramaturgical evaluation criteria during sim rehearsal.
 
 **Sub-gap 7 · The Aesthetic-Judgment gap.** Robot success criteria are predominantly functional (the robot completed the task or not). Live performance success criteria are partially aesthetic — was the moment moving, did the comedy land, did the audience lean in. Even formal metrics (run time, sound level, cue precision) underdetermine aesthetic success. *Candidate direction:* the Director Intelligence Profile as aesthetic judge (Section 5.2), combined with structured audience response signals in previews; explicit acknowledgment that aesthetic judgment will remain partially human throughout the paradigm's lifetime.
 
@@ -144,7 +144,7 @@ These seven sub-gaps are the proposed map of the Sim-to-Stage research territory
 
 ## 5. Architecture Primitives
 
-A Sim-to-Stage system, regardless of implementation, must instantiate the following seven primitives. We define each primitive at the paradigm level — the role it plays, the interface it presents to the rest of the system — without committing to implementation details, which are properly the subject of later technical reports.
+We propose the following seven architecture primitives as one useful decomposition of a Sim-to-Stage system. We expect a mature Sim-to-Stage system to instantiate variants of these primitives, but we do not claim this decomposition is unique or exhaustive (see Section 8). We define each primitive at the paradigm level — the role it plays, the interface it presents to the rest of the system — without committing to implementation details, which are properly the subject of later technical reports.
 
 ### 5.1 The Authoritative Truth Source (ATS)
 
@@ -234,7 +234,7 @@ We are explicit about what this position paper does **not** claim and where the 
 
 ## 9. Conclusion
 
-We have introduced the Sim-to-Stage paradigm: a structural homomorphism of Sim-to-Real adapted to the domain of live performance production. We have defined the Sim-to-Stage gap as the paradigm's central open problem and decomposed it into seven sub-gaps. We have proposed seven architecture primitives that any Sim-to-Stage system must instantiate. We have sketched the structure of a Sim-to-Stage benchmark.
+We have introduced the Sim-to-Stage paradigm: a structural homomorphism of Sim-to-Real adapted to the domain of live performance production. We have defined the Sim-to-Stage gap as the paradigm's central open problem and decomposed it into seven sub-gaps. We have proposed seven architecture primitives as one useful decomposition that a mature Sim-to-Stage system will likely instantiate variants of. We have sketched the structure of a Sim-to-Stage benchmark.
 
 We are at the beginning of this research program, not the end. We invite extensions, refinements, challenges, and alternative formulations from external research groups, theater companies, and live-production industrial implementers. The paradigm belongs to its community; this paper is a starting coordinate.
 
