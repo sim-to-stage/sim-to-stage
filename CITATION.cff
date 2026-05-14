@@ -5,8 +5,9 @@ message: >-
 title: "Sim-to-Stage: A Paradigm for Live Performance Production"
 type: misc
 authors:
-  - name: "Sim-to-Stage Research"
-    affiliation: "Beijing Yizhi Culture Media Co., Ltd."
+  - family-names: Chen
+    given-names: Tiantian
+    affiliation: "Sim-to-Stage Research"
 year: 2026
 url: "https://simtostage.com"
 repository-code: "https://github.com/sim-to-stage/sim-to-stage"
